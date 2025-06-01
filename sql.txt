@@ -1,0 +1,67 @@
+-- Roles Table
+CREATE TABLE Roles (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Persons Table
+CREATE TABLE Persons (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    email VARCHAR(50),
+    last_name VARCHAR(50) NOT NULL
+);
+
+-- Users Table
+CREATE TABLE Users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role_id INT NOT NULL,
+    person_id INT NOT NULL UNIQUE,
+    FOREIGN KEY (role_id) REFERENCES Roles(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (person_id) REFERENCES Persons(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Создание таблицы Genres (аналог brands)
+CREATE TABLE genres (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE CHECK (TRIM(name) <> '')
+);
+
+-- Создание таблицы Movies (аналог products)
+CREATE TABLE movies (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL CHECK (TRIM(title) <> ''),
+    rating DECIMAL(3,1) NOT NULL CHECK (rating >= 0 AND rating <= 10.0),
+    year INT NOT NULL CHECK (year >= 1888 AND year <= EXTRACT(YEAR FROM CURRENT_DATE)),
+    genre_id INT NOT NULL,
+    FOREIGN KEY (genre_id) REFERENCES genres(id) ON DELETE CASCADE,
+    CONSTRAINT unique_movie UNIQUE (title, year)
+);
+
+-- Индексы для оптимизации поиска
+CREATE INDEX idx_movie_title ON movies(title);
+CREATE INDEX idx_movie_year ON movies(year);
+CREATE INDEX idx_movie_genre_id ON movies(genre_id);
+
+-- Вставка тестовых данных
+INSERT INTO genres (name) VALUES 
+    ('Драма'),
+    ('Комедия'),
+    ('Фантастика'),
+    ('Боевик'),
+    ('Триллер')
+ON CONFLICT (name) DO NOTHING;
+
+INSERT INTO movies (title, rating, year, genre_id) VALUES 
+    ('Побег из Шоушенка', 9.3, 1994, (SELECT id FROM genres WHERE name = 'Драма')),
+    ('Зеленая миля', 8.6, 1999, (SELECT id FROM genres WHERE name = 'Драма')),
+    ('Начало', 8.8, 2010, (SELECT id FROM genres WHERE name = 'Фантастика')),
+    ('Матрица', 8.7, 1999, (SELECT id FROM genres WHERE name = 'Боевик')),
+    ('Криминальное чтиво', 8.9, 1994, (SELECT id FROM genres WHERE name = 'Триллер'))
+ON CONFLICT (title, year) DO NOTHING;
+
+CREATE ROLE kino_user WITH LOGIN PASSWORD 'password123';
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO kino_user;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO kino_user;

@@ -1,0 +1,22 @@
+package com.server.enums;
+
+public enum Operation {
+    LOGIN,
+    REGISTER,
+
+    DELETE_USER,
+    READ_USER,
+    UPDATE_USER,
+
+    GET_ALL_ROLES,
+    GET_ALL_USERS,
+    CREATE_MOVIE,
+    UPDATE_MOVIE,
+    DELETE_MOVIE,
+    GET_ALL_MOVIES,
+    GET_ALL_GENRES,
+    CREATE_GENRE,
+    UPDATE_GENRE,
+    DELETE_GENRE,
+    DISCONNECT
+}

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500" prefWidth="900" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.gui.controllers.AdminGenresCrudController" style="-fx-background-color: linear-gradient(to bottom, #E6E6FA, #D8BFD8); -fx-padding: 10;">
+    <children>
+        <VBox style="-fx-background-color: linear-gradient(to bottom, #D8BFD8, #B0A8D8); -fx-border-color: #6A5ACD; -fx-border-radius: 10; -fx-padding: 10;" prefHeight="450.0" prefWidth="150.0">
+            <children>
+                <Button fx:id="openListButton" onAction="#onOpenListButton" text="Открыть список" prefWidth="150.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                <AnchorPane fx:id="hiddenBox" visible="false" prefHeight="400.0" prefWidth="150.0" style="-fx-background-color: #D8BFD8; -fx-border-color: #6A5ACD; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;">
+                    <children>
+                        <VBox layoutX="10.0" layoutY="10.0" prefWidth="130.0" spacing="15.0" style="-fx-background-color: transparent;">
+                            <children>
+                                <Button fx:id="moviesButton" onAction="#onMoviesButton" text="Фильмы" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);" />
+                                <Button fx:id="usersButton" onAction="#onUsersButton" text="Пользователи" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);" />
+                                <Button fx:id="genresButton" onAction="#onGenresButton" text="Жанры" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                                <Button fx:id="rolesButton" onAction="#onRolesButton" text="Роли" prefWidth="110.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);"  />
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+
+        <VBox layoutX="150.0" layoutY="10.0" prefWidth="700" spacing="20.0" style="-fx-background-color: transparent; -fx-padding: 15;">
+            <children>
+                <Label text="Управление жанрами" alignment="CENTER" prefWidth="490.0" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #6A5ACD; -fx-padding: 10; -fx-background-color: linear-gradient(to right, #F0F0FF, #E6E6FA); -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                <TableView fx:id="genresTable" prefHeight="250.0" prefWidth="470.0" style="-fx-background-color: #F0F0FF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 1; -fx-padding: 5; -fx-font-size: 14px; -fx-text-fill: #6A5ACD;">
+                    <columns>
+
+                        <TableColumn fx:id="idColumn" prefWidth="60.0" text="ID" />
+                        <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Название жанра" />
+                    </columns>
+                </TableView>
+                <AnchorPane  visible="true" prefWidth="320.0" style="-fx-background-color: #F0F0FF; -fx-border-color: #6A5ACD;  -fx-border-width: 2; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);">
+                    <children>
+                        <VBox layoutX="10.0" layoutY="10.0" prefWidth="300.0" spacing="12.0" style="-fx-background-color: transparent;">
+                            <children>
+                                <TextField fx:id="nameField" prefWidth="300.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 8; -fx-font-size: 13px;" promptText="Название жанра" />
+                                <Label fx:id="errorLabel" text="" style="-fx-text-fill: #FF4040; -fx-font-size: 12px; -fx-padding: 5;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+                <HBox spacing="15.0" alignment="CENTER" style="-fx-padding: 10;">
+                    <children>
+                        <Button fx:id="addButton" onAction="#onAddButton" text="Добавить" prefWidth="100.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                        <Button fx:id="deleteButton" onAction="#onDeleteButton" text="Удалить" prefWidth="100.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                        <Button fx:id="refreshButton" onAction="#onRefreshButton" text="Обновить" prefWidth="100.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

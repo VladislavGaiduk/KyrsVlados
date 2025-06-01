@@ -1,0 +1,96 @@
+/* main.css */
+.root {
+    -fx-background-color: #E6E6FA; /* Пастельно-фиолетовый фон */
+}
+
+/* Стили для панели навигации */
+VBox.navigation {
+    -fx-background-color: #D8BFD8; /* Пастельно-фиолетовая панель */
+}
+
+/* Стили для кнопок */
+Button {
+    -fx-background-radius: 5;
+    -fx-text-fill: white;
+}
+
+Button.nav-toggle {
+    -fx-background-color: #6A5ACD; /* Фиолетовая кнопка "Открыть список" */
+}
+
+Button.nav-item {
+    -fx-background-color: #F0F0FF; /* Светлый фон для кнопок навигации */
+    -fx-text-fill: #6A5ACD; /* Фиолетовый текст */
+}
+
+Button.add {
+    -fx-background-color: #4CAF50; /* Зеленый для "Добавить" */
+}
+
+Button.edit {
+    -fx-background-color: #FFC107; /* Желтый для "Редактировать" */
+}
+
+Button.delete {
+    -fx-background-color: #f44336; /* Красный для "Удалить" */
+}
+
+Button.refresh {
+    -fx-background-color: #6A5ACD; /* Фиолетовый для "Обновить" */
+}
+
+Button.login {
+    -fx-background-color: #6A5ACD; /* Фиолетовый для "Войти" */
+}
+
+Button.register {
+    -fx-background-color: #D8BFD8; /* Пастельно-фиолетовый для "Регистрация" */
+    -fx-text-fill: #6A5ACD;
+}
+
+/* Стили для текстовых полей */
+TextField, PasswordField {
+    -fx-background-color: #F0F0FF; /* Светлый фон */
+    -fx-border-color: #6A5ACD; /* Фиолетовая граница */
+    -fx-border-radius: 5;
+}
+
+/* Стили для выпадающего списка */
+ComboBox {
+    -fx-background-color: #F0F0FF;
+    -fx-border-color: #6A5ACD;
+    -fx-border-radius: 5;
+}
+
+/* Стили для заголовков */
+Label.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6A5ACD; /* Фиолетовый цвет текста */
+}
+
+/* Стили для ошибок */
+Label.error {
+    -fx-text-fill: #FF4040; /* Красный для ошибок */
+    -fx-font-size: 12px;
+}
+
+/* Стили для заголовков таблицы */
+.table-view .column-header .label {
+    -fx-font-size: 14px; /* Увеличенный размер шрифта */
+    -fx-text-fill: #6A5ACD; /* Фиолетовый цвет текста */
+    -fx-font-weight: bold;
+}
+
+/* Стили для таблицы */
+.table-view {
+    -fx-background-color: #F0F0FF; /* Светлый фон таблицы */
+    -fx-border-color: #6A5ACD; /* Фиолетовая граница */
+}
+
+/* Стили для панели с данными */
+AnchorPane.data-pane {
+    -fx-background-color: #F0F0FF; /* Светлый фон для панели данных */
+    -fx-border-color: #6A5ACD;
+    -fx-border-radius: 5;
+}
