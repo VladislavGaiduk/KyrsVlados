@@ -9,6 +9,9 @@ public enum Operation {
     UPDATE_USER,
 
     GET_ALL_ROLES,
+    CREATE_ROLE,
+    UPDATE_ROLE,
+    DELETE_ROLE,
     GET_ALL_USERS,
     CREATE_MOVIE,
     UPDATE_MOVIE,

@@ -34,7 +34,8 @@ public class RoleController {
                 return new Response(false, "Роль с таким названием уже существует", null);
             }
             
-            Role createdRole = roleService.createRole(role);
+            roleService.saveEntity(role);
+            Role createdRole = roleService.findRoleByName(role.getName());
             return new Response(true, "Роль успешно создана", Serializer.toJson(createdRole));
             
         } catch (ResponseException e) {
@@ -74,8 +75,8 @@ public class RoleController {
                 return new Response(false, "Роль с таким названием уже существует", null);
             }
             
-            Role updatedRole = roleService.updateRole(role);
-            return new Response(true, "Роль успешно обновлена", Serializer.toJson(updatedRole));
+            roleService.updateEntity(role);
+            return new Response(true, "Роль успешно обновлена", null);
             
         } catch (ResponseException e) {
             return new Response(false, e.getMessage(), null);

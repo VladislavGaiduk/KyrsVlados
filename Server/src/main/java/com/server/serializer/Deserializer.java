@@ -26,8 +26,15 @@ public class Deserializer {
                 case DELETE_USER, READ_USER -> gson.fromJson(request.getData(), String.class);
                 case UPDATE_USER -> gson.fromJson(request.getData(), User.class);
                 case CREATE_GENRE,DELETE_GENRE,UPDATE_GENRE -> gson.fromJson(request.getData(), Genre.class);
-                case CREATE_MOVIE, UPDATE_MOVIE, DELETE_MOVIE -> // Добавляем операции для фильмов
-                        gson.fromJson(request.getData(), Movie.class);
+                case CREATE_MOVIE, UPDATE_MOVIE, DELETE_MOVIE -> gson.fromJson(request.getData(), Movie.class);
+                case GET_ALL_GENRES -> gson.fromJson(request.getData(), new TypeToken<Pair<Integer, Genre>>(){}.getType());
+                case GET_ALL_MOVIES -> gson.fromJson(request.getData(), new TypeToken<Pair<Integer, Movie>>(){}.getType());
+                case GET_ALL_USERS -> gson.fromJson(request.getData(), new TypeToken<Pair<Integer, User>>(){}.getType());
+                case GET_ALL_ROLES -> gson.fromJson(request.getData(), new TypeToken<Pair<Integer, Role>>(){}.getType());
+                case UPDATE_ROLE -> gson.fromJson(request.getData(), Role.class);
+                case CREATE_ROLE -> gson.fromJson(request.getData(), Role.class);
+                case DELETE_ROLE -> gson.fromJson(request.getData(), String.class);
+                case DISCONNECT -> gson.fromJson(request.getData(), String.class);
                 default -> null;
             };
         } catch (JsonSyntaxException e) {
