@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Entity
 @Table(name = "Roles")
 @Getter
@@ -21,4 +20,12 @@ public class Role {
     @Expose
     @Column(unique = true, nullable = false)
     private String name;
+
+    public Role() {}
+
+    public Role(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
 }

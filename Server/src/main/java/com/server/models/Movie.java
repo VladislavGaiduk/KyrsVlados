@@ -6,10 +6,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.proxy.HibernateProxy;
-
-import java.math.BigDecimal;
-import java.util.Objects;
 
 @Entity
 @Table(name = "movies")
@@ -42,5 +38,5 @@ public class Movie {
 
     @Expose
     @Column(name = "duration_minutes", nullable = false)
-    private Integer durationMinutes;
+    private int durationMinutes;
 }

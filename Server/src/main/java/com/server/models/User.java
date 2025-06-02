@@ -1,16 +1,11 @@
 package com.server.models;
 
 import com.google.gson.annotations.Expose;
-import com.server.models.Person;
-import com.server.models.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.proxy.HibernateProxy;
-
-import java.util.Objects;
 
 
 @Entity

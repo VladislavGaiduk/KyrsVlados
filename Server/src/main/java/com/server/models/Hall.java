@@ -3,28 +3,31 @@ package com.server.models;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "genres")
+@Table(name = "halls")
 @Getter
 @Setter
 @ToString
-public class Genre {
+@RequiredArgsConstructor
+public class Hall {
     @Id
     @Expose
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Expose
-    @Column(unique = true, nullable = false, length = 255)
+    @Column(nullable = false, length = 100, unique = true)
     private String name;
 
-    public Genre() {}
+    @Expose
+    @Column(nullable = false)
+    private Integer capacity;
 
-    public Genre(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @Expose
+    @Column(columnDefinition = "TEXT")
+    private String description;
 }
