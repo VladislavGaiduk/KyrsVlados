@@ -466,4 +466,8 @@ public class AdminTicketsCrudController implements Initializable {
         errorLabel.setText(message);
         errorLabel.setStyle("-fx-text-fill: #388e3c;");
     }
+    @FXML
+    void onExitButton(ActionEvent event) {
+        Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.MAIN_MENU);
+    }
 }

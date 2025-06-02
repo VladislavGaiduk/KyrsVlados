@@ -64,7 +64,7 @@ public class LoginController implements Initializable {
             AlertUtil.error("Login Error", response.getMessage());
         }
 
-//            Loader.loadScene((Stage) LoginButton.getScene().getWindow(), StagePath.ADMIN);
+//            Loader.loadScene((Stage) LoginButton.getScene().getWindow(), StagePath.ADMIN_MOVIES_MANAGMENT);
 
     }
 

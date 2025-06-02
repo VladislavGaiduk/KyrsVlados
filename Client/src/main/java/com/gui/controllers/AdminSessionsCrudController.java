@@ -566,4 +566,8 @@ public class AdminSessionsCrudController implements Initializable {
             AlertUtil.error("Ошибка", "Не удалось загрузить экран управления билетами: " + e.getMessage());
         }
     }
+    @FXML
+    void onExitButton(ActionEvent event) {
+        Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.MAIN_MENU);
+    }
 }

@@ -100,6 +100,7 @@ public class AdminGenresCrudController implements Initializable {
         selectedGenre = null;
     }
 
+
     @FXML
     void onAddButton(ActionEvent event) {
         String name = nameField.getText().trim();
@@ -261,5 +262,9 @@ public class AdminGenresCrudController implements Initializable {
         } catch (Exception e) {
             AlertUtil.error("Ошибка", "Не удалось загрузить экран управления билетами: " + e.getMessage());
         }
+    }
+    @FXML
+    void onExitButton(ActionEvent event) {
+        Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.MAIN_MENU);
     }
 }
