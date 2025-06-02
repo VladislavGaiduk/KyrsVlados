@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<AnchorPane prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.gui.controllers.AdminTicketsCrudController" style="-fx-background-color: linear-gradient(to bottom, #E6E6FA, #D8BFD8); -fx-padding: 10;">
+   <children>
+      <VBox style="-fx-background-color: linear-gradient(to bottom, #D8BFD8, #B0A8D8); -fx-border-color: #6A5ACD; -fx-border-radius: 10; -fx-padding: 10;" prefHeight="580.0" prefWidth="150.0">
+         <children>
+            <Button fx:id="openListButton" onAction="#onOpenListButton" text="Открыть список" prefWidth="150.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+            <AnchorPane fx:id="hiddenBox" visible="false" prefHeight="530.0" prefWidth="150.0" style="-fx-background-color: #D8BFD8; -fx-border-color: #6A5ACD; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;">
+               <children>
+                  <VBox layoutX="10.0" layoutY="10.0" prefWidth="130.0" spacing="15.0" style="-fx-background-color: transparent;">
+                     <children>
+                        <Button fx:id="moviesButton" onAction="#onMoviesButton" text="Фильмы" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);" />
+                        <Button fx:id="usersButton" onAction="#onUsersButton" text="Пользователи" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);" />
+                        <Button fx:id="genresButton" onAction="#onGenresButton" text="Жанры" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                        <Button fx:id="rolesButton" onAction="#onRolesButton" text="Роли" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                        <Button fx:id="hallsButton" onAction="#onHallsButton" text="Залы" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                        <Button fx:id="sessionsButton" onAction="#onSessionsButton" text="Сеансы" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                        <Button fx:id="ticketsButton" onAction="#onTicketsButton" text="Билеты" prefWidth="110.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox layoutX="150.0" layoutY="10.0" prefWidth="830" spacing="15.0" style="-fx-background-color: transparent; -fx-padding: 10;">
+         <children>
+            <Label text="Управление билетами" alignment="CENTER" prefWidth="810.0" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #6A5ACD; -fx-padding: 10; -fx-background-color: linear-gradient(to right, #F0F0FF, #E6E6FA); -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+            
+            <!-- Filter Controls -->
+            <VBox spacing="10" style="-fx-background-color: #F0F0FF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);">
+                <Label text="Фильтры" style="-fx-font-weight: bold; -fx-text-fill: #6A5ACD; -fx-font-size: 14px;"/>
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <ComboBox fx:id="sessionFilterCombo" promptText="Все сеансы" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-pref-width: 250;" />
+                    <ComboBox fx:id="userFilterCombo" promptText="Все пользователи" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-pref-width: 200;" />
+                    <TextField fx:id="seatFilterField" promptText="Место" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-pref-width: 80; -fx-padding: 5;" />
+                    <Button text="Сбросить" onAction="#onResetFilters" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 5 10; -fx-background-radius: 5;" />
+                </HBox>
+            </VBox>
+            
+            <TableView fx:id="ticketsTable" prefHeight="300.0" prefWidth="810.0" style="-fx-background-color: #F0F0FF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 1; -fx-padding: 5; -fx-font-size: 14px;">
+               <columns>
+                  <TableColumn fx:id="idColumn" prefWidth="60.0" text="ID" />
+                  <TableColumn fx:id="sessionColumn" prefWidth="200.0" text="Сеанс" />
+                  <TableColumn fx:id="userColumn" prefWidth="200.0" text="Пользователь" />
+                  <TableColumn fx:id="seatColumn" prefWidth="80.0" text="Место" />
+                  <TableColumn fx:id="purchaseTimeColumn" prefWidth="150.0" text="Время покупки" />
+               </columns>
+            </TableView>
+            
+            <AnchorPane fx:id="ticketDataBox" visible="true" prefWidth="810.0" style="-fx-background-color: #F0F0FF; -fx-border-color: #6A5ACD; -fx-border-width: 2; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);">
+               <children>
+                  <VBox layoutX="10.0" layoutY="10.0" prefWidth="780.0" spacing="12.0" style="-fx-background-color: transparent;">
+                     <children>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                           <Label text="Сеанс:" style="-fx-font-weight: bold; -fx-min-width: 100;" />
+                           <ComboBox fx:id="sessionCombo" prefWidth="400.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 5;" />
+                        </HBox>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                           <Label text="Пользователь:" style="-fx-font-weight: bold; -fx-min-width: 100;" />
+                           <ComboBox fx:id="userCombo" prefWidth="400.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 5;" />
+                        </HBox>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                           <Label text="Номер места:" style="-fx-font-weight: bold; -fx-min-width: 100;" />
+                           <TextField fx:id="seatField" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 5; -fx-pref-width: 100;" />
+                        </HBox>
+                        <Label fx:id="errorLabel" text="" style="-fx-text-fill: #FF4040; -fx-font-size: 12px; -fx-padding: 5;" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            
+            <HBox spacing="15.0" alignment="CENTER" style="-fx-padding: 10;">
+               <children>
+                  <Button fx:id="addButton" onAction="#onAddButton" text="Добавить" prefWidth="120.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                  <Button fx:id="deleteButton" onAction="#onDeleteButton" text="Удалить" prefWidth="120.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                  <Button fx:id="refreshButton" onAction="#onRefreshButton" text="Обновить" prefWidth="120.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

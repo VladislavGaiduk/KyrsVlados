@@ -2,7 +2,7 @@ package com.server.network;
 
 import com.server.controllers.*;
 import com.server.controllers.SessionController;
-//import com.server.controllers.TicketController;
+import com.server.controllers.TicketController;
 import com.server.enums.Operation;
 import java.io.*;
 import java.net.Socket;
@@ -16,7 +16,7 @@ public class ClientThread implements Runnable {
     private final RoleController roleController;
     private final HallController hallController;
     private final SessionController sessionController;
-//    private final TicketController ticketController;
+    private final TicketController ticketController;
 
     public ClientThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -26,7 +26,7 @@ public class ClientThread implements Runnable {
         this.roleController = new RoleController();
         this.hallController = new HallController();
         this.sessionController = new SessionController();
-//        this.ticketController = new TicketController();
+        this.ticketController = new TicketController();
     }
 
     @Override
@@ -96,14 +96,14 @@ public class ClientThread implements Runnable {
                 case CREATE_SESSION -> sessionController.createSession(request);
                 case UPDATE_SESSION -> sessionController.updateSession(request);
                 case DELETE_SESSION -> sessionController.deleteSession(request);
-//
-//                // Ticket operations
-//                case GET_ALL_TICKETS -> ticketController.getAllTickets();
-//                case GET_TICKETS_BY_SESSION -> ticketController.getTicketsBySession(request);
-//                case GET_TICKETS_BY_USER -> ticketController.getTicketsByUser(request);
-//                case CREATE_TICKET -> ticketController.createTicket(request);
-//                case UPDATE_TICKET -> ticketController.updateTicket(request);
-//                case DELETE_TICKET -> ticketController.deleteTicket(request);
+
+                // Ticket operations
+                case GET_ALL_TICKETS -> ticketController.getAllTickets();
+                case GET_TICKETS_BY_SESSION -> ticketController.getTicketsBySession(request);
+                case GET_TICKETS_BY_USER -> ticketController.getTicketsByUser(request);
+                case CREATE_TICKET -> ticketController.createTicket(request);
+                case UPDATE_TICKET -> ticketController.updateTicket(request);
+                case DELETE_TICKET -> ticketController.deleteTicket(request);
                 
                 case DISCONNECT -> new Response(true, "Отключение успешно", null);
                 default -> new Response(false, "Неизвестная операция", null);
