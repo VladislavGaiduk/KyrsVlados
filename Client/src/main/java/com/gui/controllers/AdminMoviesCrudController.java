@@ -11,6 +11,9 @@ import com.server.network.Response;
 import com.server.serializer.Deserializer;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +21,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -65,10 +69,20 @@ public class AdminMoviesCrudController implements Initializable {
     private Button deleteButton;
     @FXML
     private Button refreshButton;
+    @FXML
+    private ComboBox<Genre> genreFilterCombo;
+    @FXML
+    private TextField titleFilterField;
+    @FXML
+    private TextField yearFilterField;
+
 
     private MovieService movieService;
     private GenreService genreService;
     private Movie selectedMovie;
+    private final ObservableList<Movie> allMovies = FXCollections.observableArrayList();
+    private FilteredList<Movie> filteredMovies;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -90,20 +104,35 @@ public class AdminMoviesCrudController implements Initializable {
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinutes"));
 
         // Настройка ComboBox для отображения только названия жанра
-        genreComboBox.setCellFactory(param -> new ListCell<Genre>() {
+        Callback<ListView<Genre>, ListCell<Genre>> cellFactory = lv -> new ListCell<Genre>() {
             @Override
             protected void updateItem(Genre item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(empty || item == null ? "" : item.getName());
             }
-        });
-        genreComboBox.setButtonCell(new ListCell<Genre>() {
+        };
+        
+        genreComboBox.setCellFactory(cellFactory);
+        genreComboBox.setButtonCell(cellFactory.call(null));
+        
+        // Setup filter combo box
+        genreFilterCombo.setCellFactory(cellFactory);
+        genreFilterCombo.setButtonCell(new ListCell<Genre>() {
             @Override
             protected void updateItem(Genre item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty || item == null ? "" : item.getName());
+                setText(empty || item == null ? "Все жанры" : item.getName());
             }
         });
+
+        // Инициализация фильтрации
+        filteredMovies = new FilteredList<>(allMovies, p -> true);
+        SortedList<Movie> sortedData = new SortedList<>(filteredMovies);
+        sortedData.comparatorProperty().bind(moviesTable.comparatorProperty());
+        moviesTable.setItems(sortedData);
+
+        // Настройка слушателей фильтров
+        setupFilterListeners();
 
         // Загрузка жанров и фильмов
         loadGenres();
@@ -117,18 +146,35 @@ public class AdminMoviesCrudController implements Initializable {
         Response response = genreService.getAll();
         if (response.isSuccess()) {
             List<Genre> genres = new Deserializer().extractListData(response.getData(), Genre.class);
-            genreComboBox.setItems(FXCollections.observableArrayList(genres));
+            if (genres != null) {
+                // Create "All Genres" option
+                Genre allGenres = new Genre();
+                allGenres.setName("Все жанры");
+                allGenres.setId(-1);
+                
+                // Add to combo boxes
+                ObservableList<Genre> genreList = FXCollections.observableArrayList(genres);
+                genreComboBox.setItems(genreList);
+                
+                // For filter combo, add "All Genres" as first item
+                ObservableList<Genre> filterGenres = FXCollections.observableArrayList(allGenres);
+                filterGenres.addAll(genres);
+                genreFilterCombo.setItems(filterGenres);
+                genreFilterCombo.getSelectionModel().selectFirst();
+            }
         } else {
             AlertUtil.error("Ошибка загрузки", "Не удалось загрузить жанры: " + response.getMessage());
         }
     }
 
     private void loadMoviesTable() {
-        moviesTable.getItems().clear();
         Response response = movieService.getAll();
         if (response.isSuccess()) {
             List<Movie> movies = new Deserializer().extractListData(response.getData(), Movie.class);
-            moviesTable.setItems(FXCollections.observableArrayList(movies));
+            if (movies != null) {
+                allMovies.setAll(movies);
+                applyFilters();
+            }
         } else {
             AlertUtil.error("Ошибка загрузки", "Не удалось загрузить фильмы: " + response.getMessage());
         }
@@ -148,6 +194,65 @@ public class AdminMoviesCrudController implements Initializable {
                 clearFields();
             }
         });
+    }
+
+    private void setupFilterListeners() {
+        // Add listeners to filter fields
+        titleFilterField.textProperty().addListener((obs, oldVal, newVal) -> applyFilters());
+        genreFilterCombo.valueProperty().addListener((obs, oldVal, newVal) -> applyFilters());
+        yearFilterField.textProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null && !newVal.matches("\\d*")) {
+                yearFilterField.setText(newVal.replaceAll("[^\\d]", ""));
+            } else {
+                applyFilters();
+            }
+        });
+    }
+
+    private void applyFilters() {
+        if (filteredMovies == null) return;
+        
+        filteredMovies.setPredicate(movie -> {
+            if (movie == null) return false;
+            
+            // Filter by title
+            String titleFilter = titleFilterField.getText().toLowerCase();
+            if (!titleFilter.isEmpty() && 
+                (movie.getTitle() == null || !movie.getTitle().toLowerCase().contains(titleFilter))) {
+                return false;
+            }
+            
+            // Filter by genre
+            Genre selectedGenre = genreFilterCombo.getValue();
+            if (selectedGenre != null && selectedGenre.getId() != -1 && 
+                (movie.getGenre() == null || !selectedGenre.getId().equals(movie.getGenre().getId()))) {
+                return false;
+            }
+            
+            // Filter by year
+            String yearFilter = yearFilterField.getText();
+            if (!yearFilter.isEmpty()) {
+                try {
+                    int year = Integer.parseInt(yearFilter);
+                    if (movie.getYear() != year) {
+                        return false;
+                    }
+                } catch (NumberFormatException e) {
+                    // If year is not a valid number, don't filter by year
+                }
+            }
+            
+            return true;
+        });
+    }
+
+    @FXML
+    private void onResetFilters() {
+        titleFilterField.clear();
+        if (!genreFilterCombo.getItems().isEmpty()) {
+            genreFilterCombo.getSelectionModel().select(0);
+        }
+        yearFilterField.clear();
     }
 
     private void clearFields() {
