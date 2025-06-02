@@ -17,18 +17,18 @@ public class RegisterController implements Initializable {
     private UserService userService;
 
     @FXML
-    private  TextField usernameTextField;
+    private  TextField usernameField;
     @FXML
-    private TextField firstnameTextField;
+    private TextField firstNameField;
 
     @FXML
-    private TextField lastnameTextField;
+    private TextField lastNameField;
 
     @FXML
-    private PasswordField setPasswordField;
+    private PasswordField passwordField;
 
     @FXML
-    private TextField email;
+    private TextField emailField;
 
     @FXML
     private PasswordField confirmPasswordField;
@@ -40,12 +40,12 @@ public class RegisterController implements Initializable {
 
     @FXML
     void onRegistrationButton(javafx.event.ActionEvent event) {
-        String username = usernameTextField.getText();
-        String password = setPasswordField.getText();
+        String username = usernameField.getText();
+        String password = passwordField.getText();
         String confirmPassword = confirmPasswordField.getText();
-        String firstName = firstnameTextField.getText();
-        String lastName = lastnameTextField.getText();
-        String emails = email.getText();
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String emails = emailField.getText();
 
         if (!password.equals(confirmPassword)) {
             AlertUtil.error("Registration Error", "Passwords do not match.");
