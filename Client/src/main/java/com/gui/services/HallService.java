@@ -41,7 +41,8 @@ public class HallService {
         if (hall == null || hall.getId() == null) {
             return new Response(false, "ИД зала обязателен", null);
         }
-        Request request = new Request(Operation.DELETE_HALL, Serializer.toJson(hall));
+        // Send only the hall ID as a string
+        Request request = new Request(Operation.DELETE_HALL, String.valueOf(hall.getId()));
         return ServerClient.getInstance().sendRequest(request);
     }
 }

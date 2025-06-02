@@ -44,6 +44,8 @@ public class AdminMoviesCrudController implements Initializable {
     @FXML
     private TableColumn<Movie, Integer> yearColumn;
     @FXML
+    private TableColumn<Movie, Integer> durationColumn;
+    @FXML
     private TextField titleField;
     @FXML
     private ComboBox<Genre> genreComboBox;
@@ -85,9 +87,7 @@ public class AdminMoviesCrudController implements Initializable {
         });
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
-        TableColumn<Movie, Integer> durationColumn = new TableColumn<>("Длительность (мин)");
         durationColumn.setCellValueFactory(new PropertyValueFactory<>("durationMinutes"));
-        moviesTable.getColumns().add(durationColumn);
 
         // Настройка ComboBox для отображения только названия жанра
         genreComboBox.setCellFactory(param -> new ListCell<Genre>() {
@@ -235,12 +235,16 @@ public class AdminMoviesCrudController implements Initializable {
 
     @FXML
     void onRefreshButton(ActionEvent event) {
+        if (selectedMovie == null) {
+            errorLabel.setText("Сначала выберите фильм для обновления!");
+            return;
+        }
+
         String title = titleField.getText().trim();
         String ratingText = ratingField.getText().trim();
         String yearText = yearField.getText().trim();
         Genre selectedGenre = genreComboBox.getValue();
         String durationText = durationField.getText().trim();
-
 
         if (title.isEmpty() || ratingText.isEmpty() || yearText.isEmpty() || selectedGenre == null || durationText.isEmpty()) {
             errorLabel.setText("Все поля должны быть заполнены!");
@@ -252,6 +256,7 @@ public class AdminMoviesCrudController implements Initializable {
             int year = Integer.parseInt(yearText);
             int currentYear = java.time.Year.now().getValue();
             int duration = Integer.parseInt(durationText);
+            
             if (duration <= 0) {
                 errorLabel.setText("Длительность должна быть больше 0 минут");
                 return;
@@ -265,12 +270,12 @@ public class AdminMoviesCrudController implements Initializable {
                 return;
             }
 
-            Movie newMovie = new Movie();
-            newMovie.setTitle(title);
-            newMovie.setGenre(selectedGenre);
-            newMovie.setRating(rating);
-            newMovie.setYear(year);
-            newMovie.setDurationMinutes(duration);
+            // Update the selected movie with new values
+            selectedMovie.setTitle(title);
+            selectedMovie.setGenre(selectedGenre);
+            selectedMovie.setRating(rating);
+            selectedMovie.setYear(year);
+            selectedMovie.setDurationMinutes(duration);
 
             Response response = movieService.updateMovie(selectedMovie);
             if (response.isSuccess()) {

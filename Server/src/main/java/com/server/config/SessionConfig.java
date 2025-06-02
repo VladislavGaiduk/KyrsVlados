@@ -21,6 +21,9 @@ public class SessionConfig {
                 addAnnotatedClass(Role.class).
                 addAnnotatedClass(Genre.class).
                 addAnnotatedClass(Movie.class).
+                addAnnotatedClass(Hall.class).
+                addAnnotatedClass(Session.class).
+                addAnnotatedClass(Ticket.class).
                 buildSessionFactory();
     }
 

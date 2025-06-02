@@ -1,6 +1,8 @@
 package com.server.models;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.JsonAdapter;
+import com.server.utils.LocalDateTimeAdapter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -33,22 +35,15 @@ public class Session {
 
     @Expose
     @Column(name = "start_time", nullable = false)
+    @JsonAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime startTime;
 
     @Expose
     @Column(name = "end_time", nullable = false)
+    @JsonAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime endTime;
 
     @Expose
     @Column(nullable = false, columnDefinition = "NUMERIC(10,2)")
     private float price;
-
-    // Add validation to ensure end time is after start time
-    @PrePersist
-    @PreUpdate
-    private void validateTimes() {
-        if (endTime.isBefore(startTime) || endTime.isEqual(startTime)) {
-            throw new IllegalArgumentException("End time must be after start time");
-        }
-    }
 }

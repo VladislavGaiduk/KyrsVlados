@@ -89,12 +89,19 @@ public class RoleController {
     public Response deleteRole(Request request) {
         try {
             Object extractedData = new Deserializer().extractData(request);
-            if (!(extractedData instanceof Role role) || role.getId() == null) {
-                return new Response(false, "Некорректные данные роли", null);
+            if (!(extractedData instanceof String)) {
+                return new Response(false, "Некорректный формат ID роли", null);
+            }
+            
+            int roleId;
+            try {
+                roleId = Integer.parseInt((String) extractedData);
+            } catch (NumberFormatException e) {
+                return new Response(false, "Некорректный формат ID роли", null);
             }
             
             // Проверяем существование роли
-            Role existingRole = roleService.findEntity(role.getId());
+            Role existingRole = roleService.findEntity(roleId);
             if (existingRole == null) {
                 return new Response(false, "Роль не найдена", null);
             }

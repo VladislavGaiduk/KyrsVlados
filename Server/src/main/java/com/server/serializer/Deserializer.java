@@ -34,7 +34,10 @@ public class Deserializer {
                 case UPDATE_ROLE -> gson.fromJson(request.getData(), Role.class);
                 case CREATE_ROLE -> gson.fromJson(request.getData(), Role.class);
                 case DELETE_ROLE -> gson.fromJson(request.getData(), String.class);
-                case DISCONNECT -> gson.fromJson(request.getData(), String.class);
+                case CREATE_HALL, UPDATE_HALL -> gson.fromJson(request.getData(), Hall.class);
+                case DISCONNECT, DELETE_HALL -> gson.fromJson(request.getData(), String.class);
+                case GET_ALL_SESSIONS, CREATE_SESSION, UPDATE_SESSION, DELETE_SESSION -> gson.fromJson(request.getData(), Session.class);
+                case GET_SESSIONS_BY_DATE_RANGE -> gson.fromJson(request.getData(), String[].class);
                 default -> null;
             };
         } catch (JsonSyntaxException e) {

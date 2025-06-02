@@ -271,4 +271,22 @@ public class AdminHallCrudController implements Initializable {
             errorLabel.setText("Ошибка: " + response.getMessage());
         }
     }
+
+    @FXML
+    void onSessionsButton(ActionEvent event) {
+        try {
+            Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.ADMIN_SESSIONS_MANAGEMENT);
+        } catch (Exception e) {
+            AlertUtil.error("Ошибка", "Не удалось загрузить экран управления сеансами: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void onTicketsButton(ActionEvent event) {
+        try {
+            Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.ADMIN_TICKETS_MANAGEMENT);
+        } catch (Exception e) {
+            AlertUtil.error("Ошибка", "Не удалось загрузить экран управления билетами: " + e.getMessage());
+        }
+    }
 }

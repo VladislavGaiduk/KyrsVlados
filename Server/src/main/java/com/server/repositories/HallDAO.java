@@ -3,6 +3,7 @@ package com.server.repositories;
 import com.server.config.SessionConfig;
 import com.server.interfaces.DAO;
 import com.server.models.Hall;
+import com.server.models.Role;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;

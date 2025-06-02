@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<AnchorPane prefHeight="600" prefWidth="1000" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.gui.controllers.AdminSessionsCrudController" style="-fx-background-color: linear-gradient(to bottom, #E6E6FA, #D8BFD8); -fx-padding: 10;">
+   <children>
+      <VBox style="-fx-background-color: linear-gradient(to bottom, #D8BFD8, #B0A8D8); -fx-border-color: #6A5ACD; -fx-border-radius: 10; -fx-padding: 10;" prefHeight="450.0" prefWidth="150.0">
+         <children>
+            <Button fx:id="openListButton" onAction="#onOpenListButton" text="Открыть список" prefWidth="150.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+            <AnchorPane fx:id="hiddenBox" visible="false" prefHeight="400.0" prefWidth="150.0" style="-fx-background-color: #D8BFD8; -fx-border-color: #6A5ACD; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 10;">
+               <children>
+                  <VBox layoutX="10.0" layoutY="10.0" prefWidth="130.0" spacing="15.0" style="-fx-background-color: transparent;">
+                     <children>
+                        <Button fx:id="moviesButton" onAction="#onMoviesButton" text="Фильмы" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);" />
+                        <Button fx:id="usersButton" onAction="#onUsersButton" text="Пользователи" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);" />
+                        <Button fx:id="genresButton" onAction="#onGenresButton" text="Жанры" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                        <Button fx:id="rolesButton" onAction="#onRolesButton" text="Роли" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                        <Button fx:id="hallsButton" onAction="#onHallsButton" text="Залы" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                        <Button fx:id="sessionsButton" onAction="#onSessionsButton" text="Сеансы" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                        <Button fx:id="ticketsButton" onAction="#onTicketsButton" text="Билеты" prefWidth="110.0" style="-fx-background-color: #F0F0FF; -fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 8; -fx-font-size: 13px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 3, 0, 1, 1);"  />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+      <VBox layoutX="160.0" layoutY="10.0" prefWidth="820" spacing="20.0" style="-fx-background-color: transparent; -fx-padding: 15;">
+         <children>
+            <Label text="Управление сеансами" alignment="CENTER" prefWidth="790.0" style="-fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #6A5ACD; -fx-padding: 10; -fx-background-color: linear-gradient(to right, #F0F0FF, #E6E6FA); -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+            <TableView fx:id="sessionsTable" prefHeight="300.0" prefWidth="790.0" style="-fx-background-color: #F0F0FF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-background-radius: 5; -fx-border-width: 1; -fx-padding: 5; -fx-font-size: 14px; -fx-text-fill: #6A5ACD;">
+               <columns>
+                  <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="movieColumn" prefWidth="200.0" text="Фильм" />
+                  <TableColumn fx:id="hallColumn" prefWidth="150.0" text="Зал" />
+                  <TableColumn fx:id="startTimeColumn" prefWidth="150.0" text="Начало" />
+                  <TableColumn fx:id="endTimeColumn" prefWidth="150.0" text="Конец" />
+                  <TableColumn fx:id="priceColumn" prefWidth="80.0" text="Цена" />
+               </columns>
+            </TableView>
+            <AnchorPane fx:id="sessionDataBox" visible="true" prefWidth="790.0" style="-fx-background-color: #F0F0FF; -fx-border-color: #6A5ACD; -fx-border-width: 2; -fx-padding: 15; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);">
+               <children>
+                  <VBox layoutX="10.0" layoutY="10.0" prefWidth="770.0" spacing="12.0" style="-fx-background-color: transparent;">
+                     <children>
+                        <ComboBox promptText="Выберите фильм" fx:id="movieComboBox" prefWidth="750.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 5;" />
+
+                        <ComboBox promptText="Выберите зал" fx:id="hallComboBox" prefWidth="750.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 5;" />
+
+                        <HBox spacing="10.0" alignment="CENTER_LEFT">
+                           <children>
+                              <DatePicker fx:id="startDatePicker" promptText="Дата" prefWidth="150.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 5;" />
+                              <Label text="Время начала:" style="-fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-padding: 0 5 0 0;" />
+                              <ComboBox fx:id="startHourCombo" prefWidth="70.0" promptText="Час" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 5;" />
+                              <Label text=":" style="-fx-text-fill: #6A5ACD; -fx-font-weight: bold; -fx-padding: 0 2 0 2;" />
+                              <ComboBox fx:id="startMinuteCombo" prefWidth="70.0" promptText="Мин" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 5;" />
+                           </children>
+                        </HBox>
+                        <Label text="Продолжительность фильма будет рассчитана автоматически" style="-fx-text-fill: #6A5ACD; -fx-font-style: italic; -fx-font-size: 12px; -fx-padding: 0 0 10 0;" />
+                        <TextField promptText="Продолжительность" fx:id="durationField" prefWidth="750.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 8; -fx-font-size: 13px;" />
+                        <TextField fx:id="priceField" promptText="Цена" prefWidth="750.0" style="-fx-background-color: #FFFFFF; -fx-border-color: #6A5ACD; -fx-border-radius: 5; -fx-padding: 8; -fx-font-size: 13px;" />
+
+                        <Label fx:id="errorLabel" text="" style="-fx-text-fill: #FF4040; -fx-font-size: 12px; -fx-padding: 5;" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+            <HBox spacing="15.0" alignment="CENTER" style="-fx-padding: 10;">
+               <children>
+                  <Button fx:id="addButton" onAction="#onAddButton" text="Добавить" prefWidth="120.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                  <Button fx:id="deleteButton" onAction="#onDeleteButton" text="Удалить" prefWidth="120.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+                  <Button fx:id="refreshButton" onAction="#onRefreshButton" text="Обновить" prefWidth="120.0" style="-fx-background-color: #6A5ACD; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 8; -fx-padding: 10; -fx-font-size: 14px; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 5, 0, 2, 2);" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

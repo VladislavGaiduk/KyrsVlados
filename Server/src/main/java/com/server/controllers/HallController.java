@@ -65,12 +65,20 @@ public class HallController {
 
     public Response deleteHall(Request request) {
         try {
-            Hall hall = (Hall) new Deserializer().extractData(request);
-            if (hall == null || hall.getId() == null) {
-                return new Response(false, "Invalid hall ID", null);
+            // Extract hall ID as string and parse to integer
+            String hallIdStr = (String) new Deserializer().extractData(request);
+            if (hallIdStr == null || hallIdStr.trim().isEmpty()) {
+                return new Response(false, "Hall ID is required", null);
             }
             
-            Hall hallToDelete = hallService.findEntity(hall.getId());
+            int hallId;
+            try {
+                hallId = Integer.parseInt(hallIdStr);
+            } catch (NumberFormatException e) {
+                return new Response(false, "Invalid hall ID format", null);
+            }
+            
+            Hall hallToDelete = hallService.findEntity(hallId);
             if (hallToDelete == null) {
                 return new Response(false, "Hall not found", null);
             }
@@ -82,7 +90,7 @@ public class HallController {
             return new Response(false, e.getMessage(), null);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Response(false, "Failed to delete hall", null);
+            return new Response(false, "Failed to delete hall: " + e.getMessage(), null);
         }
     }
 }

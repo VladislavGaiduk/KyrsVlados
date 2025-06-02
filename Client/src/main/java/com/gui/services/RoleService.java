@@ -37,7 +37,8 @@ public class RoleService {
         if (role == null || role.getId() == null) {
             return new Response(false, "ИД роли обязателен", null);
         }
-        Request request = new Request(Operation.DELETE_ROLE, Serializer.toJson(role));
+        // Send only the role ID as a string
+        Request request = new Request(Operation.DELETE_ROLE, String.valueOf(role.getId()));
         return ServerClient.getInstance().sendRequest(request);
     }
 }

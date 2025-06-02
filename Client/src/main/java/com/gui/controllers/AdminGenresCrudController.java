@@ -200,6 +200,24 @@ public class AdminGenresCrudController implements Initializable {
     }
 
     @FXML
+    void onUsersButton(ActionEvent event) {
+        try {
+            Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.ADMIN_USERS_MANAGEMENT);
+        } catch (Exception e) {
+            AlertUtil.error("Ошибка", "Не удалось загрузить экран управления пользователями: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void onRolesButton(ActionEvent event) {
+        try {
+            Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.ADMIN_ROLES_MANAGEMENT);
+        } catch (Exception e) {
+            AlertUtil.error("Ошибка", "Не удалось загрузить экран управления жанрами: " + e.getMessage());
+        }
+    }
+
+    @FXML
     void onMoviesButton(ActionEvent event) {
         try {
             Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.ADMIN_MOVIES_MANAGMENT);
@@ -207,31 +225,41 @@ public class AdminGenresCrudController implements Initializable {
             AlertUtil.error("Ошибка", "Не удалось загрузить экран управления фильмами: " + e.getMessage());
         }
     }
-
-    @FXML
-    void onRolesButton(ActionEvent event) {
-        try {
-            Loader.loadScene((Stage) genresButton.getScene().getWindow(), StagePath.ADMIN_ROLES_MANAGEMENT);
-        } catch (Exception e) {
-            AlertUtil.error("Ошибка", "Не удалось загрузить экран управления жанрами: " + e.getMessage());
-        }
-    }
-
-    @FXML
-    void onUsersButton(ActionEvent event) {
-        try {
-            Loader.loadScene((Stage) usersButton.getScene().getWindow(), StagePath.ADMIN_USERS_MANAGEMENT);
-        } catch (Exception e) {
-            AlertUtil.error("Ошибка", "Не удалось загрузить экран управления пользователями: " + e.getMessage());
-        }
-    }
-
     @FXML
     void onGenresButton(ActionEvent event) {
         try {
-            Loader.loadScene((Stage) genresButton.getScene().getWindow(), StagePath.ADMIN_GENRES_MANAGEMENT);
+            Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.ADMIN_GENRES_MANAGEMENT);
         } catch (Exception e) {
             AlertUtil.error("Ошибка", "Не удалось загрузить экран управления жанрами: " + e.getMessage());
+        }
+    }
+
+
+
+    @FXML
+    void onHallsButton(ActionEvent event) {
+        try {
+            Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.ADMIN_HALLS_MANAGEMENT);
+        } catch (Exception e) {
+            AlertUtil.error("Ошибка", "Не удалось загрузить экран управления залами: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void onSessionsButton(ActionEvent event) {
+        try {
+            Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.ADMIN_SESSIONS_MANAGEMENT);
+        } catch (Exception e) {
+            AlertUtil.error("Ошибка", "Не удалось загрузить экран управления сеансами: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void onTicketsButton(ActionEvent event) {
+        try {
+            Loader.loadScene((Stage) moviesButton.getScene().getWindow(), StagePath.ADMIN_TICKETS_MANAGEMENT);
+        } catch (Exception e) {
+            AlertUtil.error("Ошибка", "Не удалось загрузить экран управления билетами: " + e.getMessage());
         }
     }
 }
