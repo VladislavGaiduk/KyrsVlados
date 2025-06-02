@@ -8,35 +8,26 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "movies")
+@Table(name = "halls")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Movie {
+public class Hall {
     @Id
     @Expose
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Expose
-    @Column(nullable = false, length = 255)
-    private String title;
+    @Column(nullable = false, length = 100, unique = true)
+    private String name;
 
     @Expose
     @Column(nullable = false)
-    private float rating;
+    private Integer capacity;
 
     @Expose
-    @Column(name = "year")
-    private int year;
-
-    @Expose
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "genre_id", nullable = false)
-    private Genre genre;
-
-    @Expose
-    @Column(name = "duration_minutes", nullable = false)
-    private int durationMinutes;
+    @Column(columnDefinition = "TEXT")
+    private String description;
 }

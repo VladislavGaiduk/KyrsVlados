@@ -39,4 +39,8 @@ public class Movie {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "genre_id", nullable = false)
     private Genre genre;
+
+    @Expose
+    @Column(name = "duration_minutes", nullable = false)
+    private Integer durationMinutes;
 }

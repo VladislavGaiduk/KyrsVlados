@@ -65,3 +65,50 @@ ON CONFLICT (title, year) DO NOTHING;
 CREATE ROLE kino_user WITH LOGIN PASSWORD 'password123';
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO kino_user;
 GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO kino_user;
+
+-- Halls Table
+CREATE TABLE Halls (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    capacity INT NOT NULL CHECK (capacity > 0),
+    description TEXT
+);
+
+-- Sessions Table
+CREATE TABLE Sessions (
+    id SERIAL PRIMARY KEY,
+    movie_id INT NOT NULL,
+    hall_id INT NOT NULL,
+    start_time TIMESTAMP NOT NULL,
+    end_time TIMESTAMP NOT NULL,
+    price FLOAT NOT NULL CHECK (price >= 0),
+    FOREIGN KEY (movie_id) REFERENCES movies(id) ON DELETE CASCADE,
+    FOREIGN KEY (hall_id) REFERENCES Halls(id) ON DELETE CASCADE,
+    CONSTRAINT valid_session_time CHECK (end_time > start_time)
+);
+
+-- Tickets Table
+CREATE TABLE Tickets (
+    id SERIAL PRIMARY KEY,
+    session_id INT NOT NULL,
+    user_id INT NOT NULL,
+    seat_number INT NOT NULL,
+    purchase_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (session_id) REFERENCES Sessions(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE,
+    UNIQUE(session_id, seat_number)
+);
+
+-- Indexes for better performance
+CREATE INDEX idx_sessions_movie_id ON Sessions(movie_id);
+CREATE INDEX idx_sessions_hall_id ON Sessions(hall_id);
+CREATE INDEX idx_sessions_time ON Sessions(start_time, end_time);
+CREATE INDEX idx_tickets_session_id ON Tickets(session_id);
+CREATE INDEX idx_tickets_user_id ON Tickets(user_id);
+
+-- Insert some sample data for halls
+INSERT INTO Halls (name, capacity, description) VALUES 
+    ('Зал 1', 100, 'Основной зал с 3D проекцией'),
+    ('Зал 2', 50, 'Малый зал'),
+    ('VIP зал', 30, 'Премиум зал с диванами')
+ON CONFLICT (name) DO NOTHING;

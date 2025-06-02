@@ -16,10 +16,12 @@ public class MovieService {
 
     public Response addMovie(Movie movie) {
         if (movie == null || movie.getTitle() == null || movie.getTitle().trim().isEmpty() ||
-                movie.getRating() <  0|| movie.getRating() > 10 ||
+                movie.getRating() < 0 || movie.getRating() > 10 ||
                 movie.getYear() < 1888 || movie.getYear() > java.time.Year.now().getValue() ||
-                movie.getGenre() == null || movie.getGenre().getId() == null) {
-            return new Response(false, "Некорректные данные фильма: проверьте название, рейтинг (0-10), год (1888-" + java.time.Year.now().getValue() + ") и жанр", null);
+                movie.getGenre() == null || movie.getGenre().getId() == null ||
+                movie.getDurationMinutes() <= 0) {
+            return new Response(false, "Некорректные данные фильма: проверьте название, рейтинг (0-10), год (1888-" +
+                    java.time.Year.now().getValue() + "), длительность (>0) и жанр", null);
         }
         Request request = new Request(Operation.CREATE_MOVIE, Serializer.toJson(movie));
         return ServerClient.getInstance().sendRequest(request);
